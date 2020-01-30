@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Property;
+use App\Entity\PropertySearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
 
@@ -21,14 +23,34 @@ class PropertyRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Property[]
+     * @param PropertySearch $propertySearch
+     * @return Query
      */
-    public function findAllVisible(): array
+    public function findAllVisibleQuery(PropertySearch $propertySearch): Query
     {
-        return $this->findVisibleQuery()
-            ->where('p.sold = false')
-            ->getQuery()
-            ->getResult();
+        $query = $this->findVisibleQuery();
+
+        if ($propertySearch->getMinPrice()) {
+            $query = $query->andWhere('p.price >= :minprice');
+            $query->setParameter('minprice', $propertySearch->getMinPrice());
+        }
+
+        if ($propertySearch->getMaxPrice()) {
+            $query = $query->andWhere('p.price <= :maxprice');
+            $query->setParameter('maxprice', $propertySearch->getMaxPrice());
+        }
+
+        if ($propertySearch->getMinSurface()) {
+            $query = $query->andWhere('p.surface >= :minsurface');
+            $query->setParameter('minsurface', $propertySearch->getMinSurface());
+        }
+
+        if ($propertySearch->getMaxSurface()) {
+            $query = $query->andWhere('p.surface <= :maxsurface');
+            $query->setParameter('maxsurface', $propertySearch->getMaxSurface());
+        }
+
+            return $query->getQuery();
     }
 
     /**
