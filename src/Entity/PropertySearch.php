@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 class PropertySearch {
     /**
      * @var int|null
@@ -22,6 +24,16 @@ class PropertySearch {
      * @var int|null
      */
     private $maxSurface;
+
+    /**
+     * @var ArrayCollection
+     */
+    private $options;
+
+    public function __construct()
+    {
+         $this->options = new ArrayCollection();
+    }
 
     /**
      * @return int|null
@@ -92,6 +104,24 @@ class PropertySearch {
     public function setMaxSurface(?int $maxSurface): PropertySearch
     {
         $this->maxSurface = $maxSurface;
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getOptions(): ArrayCollection
+    {
+        return $this->options;
+    }
+
+    /**
+     * @param ArrayCollection $options
+     * @return PropertySearch
+     */
+    public function setOptions(ArrayCollection $options): PropertySearch
+    {
+        $this->options = $options;
         return $this;
     }
 

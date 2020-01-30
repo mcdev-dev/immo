@@ -7,7 +7,11 @@
 {% block body %}
     <div class="container mt-4">
         <h1>Éditer nos biens</h1>
-        {{ include ('admin/property/_form.html.twig', {button: 'Éditer'}) }}
+        {{ include ('admin/property/_form.html.twig', {button: 'Sauvegarder'}) }}
+    </div>
+    <div class="container mt-4">
+        <a href="{{ path('admin.property.index') }}" class="btn btn-warning">Annuler</a>
     </div>
 {% endblock %}
+
 

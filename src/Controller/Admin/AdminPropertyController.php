@@ -32,7 +32,7 @@ class AdminPropertyController extends AbstractController
 
     /**
      * @return Response
-     * @Route("/", name="admin.index")
+     * @Route("/", name="admin.property.index")
      */
     public function index()
     {
@@ -79,7 +79,7 @@ class AdminPropertyController extends AbstractController
             if ($form->isValid()) {
                 $this->em->flush();
                 $this->addFlash('success', 'Modification réussie');
-                return $this->redirectToRoute('admin.index');
+                return $this->redirectToRoute('admin.property.index');
             }
         }
         return $this->render('admin/property/edit.html.twig',

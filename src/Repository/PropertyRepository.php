@@ -50,6 +50,15 @@ class PropertyRepository extends ServiceEntityRepository
             $query->setParameter('maxsurface', $propertySearch->getMaxSurface());
         }
 
+        if ($propertySearch->getOptions()->count() > 0) {
+            $k = 0;
+            foreach ($propertySearch->getOptions() as $option) {
+                $k++;
+                $query = $query->andWhere(":options$k MEMBER OF p.options");
+                $query->setParameter("options$k", $option);
+            }
+        }
+
             return $query->getQuery();
     }
 
