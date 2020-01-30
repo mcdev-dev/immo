@@ -32,7 +32,7 @@ class AdminPropertyController extends AbstractController
 
     /**
      * @return Response
-     * @Route("/admin", name="admin.property.index")
+     * @Route("/", name="admin.index")
      */
     public function index()
     {
@@ -41,7 +41,7 @@ class AdminPropertyController extends AbstractController
     }
 
     /**
-     * @Route("/admin/property/create", name="admin.property.new")
+     * @Route("/property/create", name="admin.new")
      * @param Request $request
      * @return RedirectResponse|Response
      */
@@ -55,7 +55,7 @@ class AdminPropertyController extends AbstractController
                 $this->em->persist($property);
                 $this->em->flush();
                 $this->addFlash('success', 'Nouveau bien enregistré');
-                return $this->redirectToRoute('admin.property.index');
+                return $this->redirectToRoute('admin.index');
             }
         }
         return $this->render('admin/property/new.html.twig',
@@ -66,7 +66,7 @@ class AdminPropertyController extends AbstractController
     }
 
     /**
-     * @Route("/admin/property/{id}", name="admin.property.edit", methods="GET|POST")
+     * @Route("/property/{id}", name="admin.property.edit", methods="GET|POST")
      * @param Property $property
      * @param Request $request
      * @return RedirectResponse|Response
@@ -79,7 +79,7 @@ class AdminPropertyController extends AbstractController
             if ($form->isValid()) {
                 $this->em->flush();
                 $this->addFlash('success', 'Modification réussie');
-                return $this->redirectToRoute('admin.property.index');
+                return $this->redirectToRoute('admin.index');
             }
         }
         return $this->render('admin/property/edit.html.twig',
@@ -92,7 +92,7 @@ class AdminPropertyController extends AbstractController
     /**
      * @param Property $property
      * @param Request $request
-     * @Route("admin/property/{id}", name="admin.property.delete", methods="DELETE")
+     * @Route("/property/{id}", name="admin.property.delete", methods="DELETE")
      * @return RedirectResponse
      */
     public function delete(Property $property, Request $request)
